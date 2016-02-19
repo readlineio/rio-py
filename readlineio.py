@@ -6,11 +6,11 @@ import threading
 key = None
 
 STAGE = 'development'
-server_name = 'localhost:8080'
-channel_base = 'http://localhost:8888'
+server_name = 'readline.io'
+channel_base = 'http://readline.io'
 
 # TODO: hardcoded host parameter
-channel = Channel('http://readline.io', 'index')
+channel = Channel(channel_base, 'index')
 
 application_main = None
 
