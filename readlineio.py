@@ -62,6 +62,22 @@ class DeferredInput(object):
         self.session.send(message)
 
 
+class DeferredChoice(object):
+
+    def __init__(self, session, prompt):
+        self.session = session
+        self.prompt = prompt
+
+    def then(self, callback):
+        callback_name = register_callback(callback)
+        message = {
+            'type': 'choice',
+            'prompt': self.prompt,
+            'callback': callback_name
+        }
+        self.session.send(message)
+
+
 def session():
     return session_stack[-1]
 
@@ -96,6 +112,10 @@ def send(message):
 def input(text):
     # Write something to the current session's firebase
     return DeferredInput(session(), text)
+
+
+def choice(text):
+    return DeferredChoice(session(), text)
 
 
 def handle_message(message):
