@@ -23,4 +23,4 @@ def actually_nuke_email(choice):
         rio.output('Aborting process')
 
 if __name__ == '__main__':
-    rio.run()
+    rio.run('Quick nuke tool example')

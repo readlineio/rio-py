@@ -1,7 +1,10 @@
 from channel import Channel
+import time
 import json
 import random
 import threading
+import requests
+import os
 
 key = None
 
@@ -143,11 +146,19 @@ def random_page_id(length=10):
     return ''.join(random.choice(chars) for _ in range(length))
 
 
-def run():
+def update_program_channel(message):
+    requests.post(
+        os.path.join(channel_base, 'program', 'register'),
+        data=json.dumps(message)
+        )
+
+
+def run(title="Untitled Program"):
     page_id = random_page_id()
     page_channel = Channel(channel_base, page_id)
     print("Access your application by going to http://{}/{}".format(server_name, page_id))
     while True:
+        update_program_channel({'page_id': page_id, 'title': title})
         message = page_channel.dequeue()
         if message:
             # TODO: add proper logging here
