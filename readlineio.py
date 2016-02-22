@@ -16,6 +16,7 @@ channel_base = 'http://readline.io'
 channel = Channel(channel_base, 'index')
 
 application_main = None
+application_title = None
 
 # TODO: again, global here? is this safe?
 session_stack = []
@@ -129,6 +130,10 @@ def handle_message(message):
         session_id = message.get('session', 'TODO')
         with SessionContext(session_id):
             sess = session()
+            send({
+                'type': 'title',
+                'text': application_title
+            })
             application_main()
 
     elif action == 'call':
@@ -154,11 +159,13 @@ def update_program_channel(message):
 
 
 def run(title="Untitled Program"):
+    global application_title
+    application_title = title
     page_id = random_page_id()
     page_channel = Channel(channel_base, page_id)
     print("Access your application by going to http://{}/{}".format(server_name, page_id))
     while True:
-        update_program_channel({'page_id': page_id, 'title': title})
+        update_program_channel({'page_id': page_id, 'title': application_title})
         message = page_channel.dequeue()
         if message:
             # TODO: add proper logging here
