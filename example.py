@@ -1,26 +1,29 @@
-import readlineio as rio
+import readlineio as r
 import time
 
-@rio.main
-def example_input():
-    rio.output('Patreon Nuke Tool. Use with Caution!')
-    rio.input('What is the email address to nuke?').then(nuke_email)
+@r.main('User nuke tool')
+def nuke_tool():
+    r.output('Patreon Nuke Tool. Use with Caution!')
+    r.input('What is the email address to nuke?').then(nuke_email_confirm)
 
-def nuke_email(email):
-    rio.output('Nuking user <' + email + '>')
-    rio.choice('Continue?').then(actually_nuke_email)
+def nuke_email_confirm(email):
+    #r.session.set('email', email)
+    r.output('Nuking user [' + email + ']')
+    r.choice('Continue?').then(nuke_email)
 
-def actually_nuke_email(choice):
+def nuke_email(choice):
+    #email = r.session.get('email')
     if choice == 'Yes':
-        rio.output('Erasing user messages...')
+        #r.output('Continuing with nuke on user: ' + email)
+        r.output('Erasing user messages...')
         time.sleep(1)
-        rio.output('Dereferencing payment history...')
+        r.output('Dereferencing payment history...')
         time.sleep(1)
-        rio.output('Erasing user info...')
+        r.output('Erasing user info...')
         time.sleep(1)
-        rio.output('Done!')
+        r.output('Done!')
     else:
-        rio.output('Aborting process')
+        r.output('Aborting process')
 
 if __name__ == '__main__':
-    rio.run('User nuke tool')
+    r.run(nuke_tool)
