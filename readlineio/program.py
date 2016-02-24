@@ -32,7 +32,7 @@ class Program(object):
 
     def log(self, *messages):
         if self.debug:
-            print(*messages)
+            print(' '.join(str(m) for m in messages))
 
     def url(self):
         return os.path.join(APPLICATION_BASE_URL, self.page_id)
