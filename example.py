@@ -1,29 +1,19 @@
-import readlineio as r
+import readlineio as rio
 import time
 
-@r.main('User nuke tool')
-def nuke_tool():
-    r.output('Patreon Nuke Tool. Use with Caution!')
-    r.input('What is the email address to nuke?').then(nuke_email_confirm)
+@rio.main('A fun example program')
+def main():
+    rio.output("I'm running this from my laptop.")
+    time.sleep(2)
+    rio.output("I also added some delay so this looks more fancy.")
+    time.sleep(2)
+    rio.choice("Do you like it?").then(respond)
 
-def nuke_email_confirm(email):
-    #r.session.set('email', email)
-    r.output('Nuking user [' + email + ']')
-    r.choice('Continue?').then(nuke_email)
-
-def nuke_email(choice):
-    #email = r.session.get('email')
+def respond(choice):
     if choice == 'Yes':
-        #r.output('Continuing with nuke on user: ' + email)
-        r.output('Erasing user messages...')
-        time.sleep(1)
-        r.output('Dereferencing payment history...')
-        time.sleep(1)
-        r.output('Erasing user info...')
-        time.sleep(1)
-        r.output('Done!')
+        rio.output('Yay!')
     else:
-        r.output('Aborting process')
+        rio.output('Oh...')
 
 if __name__ == '__main__':
-    r.run(nuke_tool)
+    rio.run(main)
